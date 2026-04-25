@@ -5,6 +5,9 @@
 
 ## 基本步骤
 
+> [!IMPORTANT]
+> 目前，直接使用 Visual Studio Installer 已经无法安装 Visual Stduio 2022 的社区版，因此请使用 Unity Hub 的安装功能，为你使用的 Unity Editor 配备合适版本的 Visual Studio
+
 1. 安装 Unity Hub
     - 安装 Unity Editor 版本：`2022.3.62f3c1 LTS`
     - **注意**，如果你使用了 `Unity Editor 2022.3.62f3c1 LTS`，在这个阶段，请额外安装 Visual Studio 2022，新于这个版本的 Visual Studio 是无法用于编译此版本 Unity 的项目的。
