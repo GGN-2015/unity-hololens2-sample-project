@@ -1,7 +1,37 @@
-# 如何创建一个 Hololens2 示例项目
-
-本节内容将为你介绍此项目是如何创建而成的。本项目使用 Hololens2 以及 MRTK3 创建一个示例项目。
+本项目使用 Hololens2 以及 MRTK3 创建一个示例项目。
 - 参考教程：https://learn.microsoft.com/en-us/training/paths/beginner-hololens-2-tutorials/
+
+如果你想直接复现本项目而不自己动手创建项目，可以参考 “如何从当前项目出发编译并复现本项目”
+
+如果你想自己动手重新实现本项目中的内容，可以参考 “如何创建本 Hololens2 示例项目”
+
+# 如何从当前项目出发编译并复现本项目
+
+1. 配置 Unity Editor `2022.3.62f3c1 LTS` 以及 Visual Studio 2022
+    - Visual Studio 2022 要用 Unity Hub 的 Installs 界面下载
+2. 使用 Unity Hub 打开 `./Hololens2Test` 中的项目
+3. 打开场景：
+    - File -> Open Scene
+    - 选择 `Asserts/Secens/Hololen2Scene.unity`
+4. 重新填写 File -> Build Settings
+    - UWP
+    - ARM64
+    - Remote Decive (via Device Portal)
+       - 填写正确的 Address/Username/Password
+       - Device Portal 的 Address 最好到浏览器测试一下看看是否能连上
+       - 最好到 System -> Preferences -> Decive Security 里面
+           - 要么关闭 SSL connection 的 reqire 选项
+           - 要么下载证书 (名为 `rootcertificate.cer` 的文件) 并安装
+    - 配置好后点击 Switch Platform
+5. 到 Edit -> Project Settings -> Project Validation 里面做 Fix All
+    - 可能会剩一些不重要的错误 Fix 不掉，不用管他
+
+剩余的操作详见 “部署项目到 Hololens2” 一节。
+
+
+# 如何创建本 Hololens2 示例项目
+
+本节内容将为你介绍此项目是如何创建而成的。
 
 ## 约定
 
@@ -62,6 +92,13 @@
 5. 解决 Visual Studio 组件缺失问题
     - 使用 Visual Studio 打开 Build 生的文件夹中的 sln 文件
     - 打开后，Visual Studio 会提示缺失的环境
+6. Build and Run，如果遇到报错可以参考下面的解决方案。
+    - 为了与本项目中提供的自动化脚本配合。
+    - 你需要将 build 项目保存到 `./Hololens2Test/_build` 目录中
+    - 在 build 前请确保 Hololens2 已经解锁，否则 Unity 将无法通过 Device Portal 连接 Hololens2
+        - 如果你已经编译上了，再去开 Hololens2 大概率会连接失败
+
+## 编译报错的常见解决方案
 
 > [!NOTE]
 > 一些可能出现的其他报错以及解决方式：(注意：每次解决报错后需要重新 Build)
@@ -73,9 +110,12 @@
 > - Selected Visual Studio is missing required components and may not be able to build the generated project.
 >   - 把 `./Hololens2Test/_build` 里面的项目的 `.sln` 文件用 Visual Studio 打开一下，诊断缺失组件
 >   - 再按照提示安装即可
-> - Build Failed 然后很长的编译命令，报错信息为 error MSB3774: 找不到 SDK“WindowsMobile, Version=10.0.28000.0”
->   - 用 Visual Studio 2022 打开 `.sln` 文件
->   - 然后到资源管理器把 `Hololens2Test` （主解决方案）卸载
->   - 到代码里面找到包含 `WindowsMobile` 的 `ItemGroup`，然后将其删掉，删掉后再冲下加载这个
+> - Build Failed 然后很长的编译命令，报错信息中出现 error MSB3774: 找不到 SDK“WindowsMobile, Version=10.0.2xxxx.0”
+>   - 方法一：使用本项目提供的自动化脚本
+>       - 运行 `./fix_win_mobile.py` 这个 python 脚本即可
+>   - 方法二：手动解决（如果脚本运行后报错不变）
+>       - 用 Visual Studio 2022 打开 `.sln` 文件
+>       - 然后到资源管理器把 `Hololens2Test` （主解决方案）卸载
+>       - 到代码里面找到包含 `WindowsMobile` 的 `ItemGroup`，然后将其删掉，删掉后再冲下加载这个
 > - Deployment Error，报错信息中能看到类似 ...x64.appx 的文件名
 >   - 到 Build Settings 里面目标架构选择 ARM64
