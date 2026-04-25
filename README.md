@@ -3,6 +3,11 @@
 本节内容将为你介绍此项目是如何创建而成的。本项目使用 Hololens2 以及 MRTK3 创建一个示例项目。
 - 参考教程：https://learn.microsoft.com/en-us/training/paths/beginner-hololens-2-tutorials/
 
+## 约定
+
+- 项目文件存储在 `./Hololens2Test` 目录
+- 打包构建项目存储在 `./Hololens2Test/_build` 目录
+
 ## 基本步骤
 
 > [!IMPORTANT]
@@ -43,6 +48,10 @@
 > [!TIP]
 > 请善于使用 Device Portal，Device Portal 的网页版提供了丰富的辅助功能，可以用于将设备上路径的文件发送到其他电脑等等。
 
+> [!TIP]
+> 如果你的电脑没有打开 Windows 开发者模式，你需要将其开启:
+> - 详见：`Win+I` -> 系统 -> 高级 -> 开发者模式
+
 1. 确保你的 Hololens2 和你的开发用电脑位于同一个局域网中
 2. 确保你的 Hololens2 已经打开并配置好了 Device Portal
 3. 在 Hololens 上提前安装好 “适用于 Windows Mixed Reality 的 OpenXR 工具（使用）”
@@ -53,3 +62,20 @@
 5. 解决 Visual Studio 组件缺失问题
     - 使用 Visual Studio 打开 Build 生的文件夹中的 sln 文件
     - 打开后，Visual Studio 会提示缺失的环境
+
+> [!NOTE]
+> 一些可能出现的其他报错以及解决方式：(注意：每次解决报错后需要重新 Build)
+> - No valid MRTK Profile for build target platform. 
+>   - 去 Edit -> Project Settings -> Project Validation 里面 Fix 一下
+> - Failed to open DevicePortal connection to 'xxx.xxx.xxx.xxx'
+>   - 先用浏览器测试一下 DevicePortal 的网页端是否可用，如果可用
+>   - 大概率是 Build Settings 里面的 Device Portal 口令丢失了，重新填写一下就行
+> - Selected Visual Studio is missing required components and may not be able to build the generated project.
+>   - 把 `./Hololens2Test/_build` 里面的项目的 `.sln` 文件用 Visual Studio 打开一下，诊断缺失组件
+>   - 再按照提示安装即可
+> - Build Failed 然后很长的编译命令，报错信息为 error MSB3774: 找不到 SDK“WindowsMobile, Version=10.0.28000.0”
+>   - 用 Visual Studio 2022 打开 `.sln` 文件
+>   - 然后到资源管理器把 `Hololens2Test` （主解决方案）卸载
+>   - 到代码里面找到包含 `WindowsMobile` 的 `ItemGroup`，然后将其删掉，删掉后再冲下加载这个
+> - Deployment Error，报错信息中能看到类似 ...x64.appx 的文件名
+>   - 到 Build Settings 里面目标架构选择 ARM64
