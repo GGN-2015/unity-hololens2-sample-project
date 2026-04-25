@@ -11,7 +11,7 @@
     - 在 Unity Hub -> Installs 找到指定版本的 Unity Editor 再点击其选项卡右上角的齿轮
         - 至少在其中添加 VS2022, UWP Build Support, Windows Build Support IL2CPP,
     - 另外你还需要在 Visual Studio Installer 中找到 Visual Studio 2022
-        - 并额外安装 WinUI 相关组件
+        - 并额外安装 WinUI, .NET 相关组件
 2. 安装 Windows SDK
     - 参考：https://learn.microsoft.com/en-us/windows/apps/windows-sdk/downloads
 3. 下载 `MixedRealityFeatureTool`
