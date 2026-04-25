@@ -13,6 +13,7 @@
 /Hololens2Test/[Bb]uilds/
 /Hololens2Test/[Ll]ogs/
 /Hololens2Test/[Uu]ser[Ss]ettings/
+/Hololens2Test/_build/
 *.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
